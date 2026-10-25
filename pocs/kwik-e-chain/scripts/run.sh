@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 # Script Name : run.sh
-# Date        : 2020.04.xx (migrated 2026-07)
+# Date        : 2026.07
 # License     : MIT
 #
-# Description : Runs "the-kwik-e-chain" through Spark Submit.
+# Description : Runs "kwik-e-chain" through Spark Submit.
 cd "$(dirname "$0")/.."
 
 JAR_DIR="target/scala-*"

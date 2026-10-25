@@ -15,10 +15,10 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 
 ```text
 .
-├── .claude/
-│   └── rules/                  spark concepts + scala/pyspark conventions
 ├── .docs/                      readme assets
 ├── .github/                    pr + issue templates
+├── AGENTS.md                   instructions for coding agents
+├── LICENSE                     MIT license
 ├── snippets/                   isolated spark experiments (scripts, notebooks, graphx)
 └── pocs/
     ├── README.md               the Kwik-E-Mart universe and the inspiration

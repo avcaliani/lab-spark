@@ -18,10 +18,11 @@ Scala and Spark pipeline that validates the DonutCoin (DONU) transaction ledger 
 # All commands below run from this folder
 cd pocs/kwik-e-chain
 
-# Download the known-users reference data (kafka-in-docker's Simpsons cast list)
+# Download the known-users reference (the pipeline reads data/bronze/users.csv to validate transfers)
+# Pinned to a commit of kafka-in-docker's Simpsons cast list
 mkdir -p data/bronze
 curl -o data/bronze/users.csv \
-  https://raw.githubusercontent.com/avcaliani/kafka-in-docker/refs/heads/main/scripts/users.csv
+  https://raw.githubusercontent.com/avcaliani/kafka-in-docker/bd46b85779ecc6ee4eebc388813009096bb17158/scripts/users.csv
 
 # Build the image
 docker compose build
@@ -29,7 +30,7 @@ docker compose build
 # Start the container
 docker compose up -d
 
-# Generate the mock DonutCoin transactions dataset
+# Generate the mock DonutCoin transactions dataset (python3 is installed in the Dockerfile)
 docker compose exec spark python3 scripts/generate_donu_transactions.py
 
 # Run the job (builds & runs)

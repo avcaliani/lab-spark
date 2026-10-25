@@ -49,7 +49,7 @@ cd pocs/kwik-e-mart
 uv sync
 
 # Generate the mock sales dataset
-DATA_PATH="$(pwd)/data" scripts/generate_sales_data.py
+DATA_PATH="$(pwd)/data" uv run scripts/generate_sales_data.py
 
 # Run the PySpark job (must be an absolute path -- Delta's path-based table
 # addressing breaks on a leading ./ in the path)
