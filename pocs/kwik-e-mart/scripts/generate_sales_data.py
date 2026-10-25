@@ -17,26 +17,26 @@ from pathlib import Path
 INVALID_PCT = 5
 
 MONTHS = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
 ]
-BRANCHES = ['Springfield', 'Shelbyville', 'Capital City', 'Ogdenville', 'North Haverbrook', 'Brockway']
+BRANCHES = ["Springfield", "Shelbyville", "Capital City", "Ogdenville", "North Haverbrook", "Brockway"]
 SALESPEOPLE = [
-    'Apu Nahasapeemapetilon', 'Manjula Nahasapeemapetilon', 'Sanjay Nahasapeemapetilon',
-    'Jimbo Jones', 'Kearney Zzyzwicz', 'Dolph Starbeam', 'Martin Prince',
-    'Nelson Muntz', 'Sherri Mackleberry', 'Uter Zorker',
+    "Apu Nahasapeemapetilon", "Manjula Nahasapeemapetilon", "Sanjay Nahasapeemapetilon",
+    "Jimbo Jones", "Kearney Zzyzwicz", "Dolph Starbeam", "Martin Prince",
+    "Nelson Muntz", "Sherri Mackleberry", "Uter Zorker",
 ]
 PRODUCTS = [
-    'Buzz Cola', 'Duff Beer', 'Squishee', "Krusty-O's", 'Pink Donuts',
-    'Lard Lad Donuts', 'Radioactive Man Comic', 'Chili Dog',
+    "Buzz Cola", "Duff Beer", "Squishee", "Krusty-O's", "Pink Donuts",
+    "Lard Lad Donuts", "Radioactive Man Comic", "Chili Dog",
 ]
 CLIENTS = [
-    'Homer Simpson', 'Marge Simpson', 'Bart Simpson', 'Lisa Simpson', 'Maggie Simpson',
-    'Ned Flanders', 'Milhouse Van Houten', 'Mr. Burns', 'Waylon Smithers', 'Krusty the Clown',
-    'Apu Nahasapeemapetilon', 'Principal Skinner', 'Edna Krabappel', 'Chief Wiggum', 'Ralph Wiggum',
-    'Groundskeeper Willie', 'Comic Book Guy', 'Moe Szyslak', 'Lenny Leonard', 'Carl Carlson',
+    "Homer Simpson", "Marge Simpson", "Bart Simpson", "Lisa Simpson", "Maggie Simpson",
+    "Ned Flanders", "Milhouse Van Houten", "Mr. Burns", "Waylon Smithers", "Krusty the Clown",
+    "Apu Nahasapeemapetilon", "Principal Skinner", "Edna Krabappel", "Chief Wiggum", "Ralph Wiggum",
+    "Groundskeeper Willie", "Comic Book Guy", "Moe Szyslak", "Lenny Leonard", "Carl Carlson",
 ]
-CSV_HEADER = ['sale_id', 'date', 'branch', 'salesperson', 'client', 'product', 'quantity', 'unit_price', 'discount_pct']
+CSV_HEADER = ["sale_id", "date", "branch", "salesperson", "client", "product", "quantity", "unit_price", "discount_pct"]
 
 
 def maybe_buggy(row: dict) -> dict:
@@ -45,11 +45,11 @@ def maybe_buggy(row: dict) -> dict:
 
     match random.randint(0, 2):
         case 0:
-            row['salesperson'] = ''
+            row["salesperson"] = ""
         case 1:
-            row['date'] = ''
+            row["date"] = ""
         case _:
-            row['quantity'] = -row['quantity']
+            row["quantity"] = -row["quantity"]
 
     return row
 
@@ -57,21 +57,21 @@ def maybe_buggy(row: dict) -> dict:
 def build_row() -> list:
     cents = random.randint(100, 15000)
     row = maybe_buggy({
-        'sale_id': str(uuid.uuid4()),
-        'date': f'{random.choice(MONTHS)} {random.randint(1, 28)}, {random.randint(2022, 2024)}',
-        'branch': random.choice(BRANCHES),
-        'salesperson': random.choice(SALESPEOPLE),
-        'client': random.choice(CLIENTS),
-        'product': random.choice(PRODUCTS),
-        'quantity': random.randint(1, 100),
-        'unit_price': f'${cents // 100}.{cents % 100:02d}',
-        'discount_pct': random.randint(0, 25),
+        "sale_id": str(uuid.uuid4()),
+        "date": f"{random.choice(MONTHS)} {random.randint(1, 28)}, {random.randint(2022, 2024)}",
+        "branch": random.choice(BRANCHES),
+        "salesperson": random.choice(SALESPEOPLE),
+        "client": random.choice(CLIENTS),
+        "product": random.choice(PRODUCTS),
+        "quantity": random.randint(1, 100),
+        "unit_price": f"${cents // 100}.{cents % 100:02d}",
+        "discount_pct": random.randint(0, 25),
     })
     return [row[col] for col in CSV_HEADER]
 
 
 def write_part_file(path: Path, num_rows: int) -> None:
-    with path.open('w', newline='') as f:
+    with path.open("w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(CSV_HEADER)
         for _ in range(num_rows):
@@ -79,23 +79,23 @@ def write_part_file(path: Path, num_rows: int) -> None:
 
 
 def main() -> None:
-    num_rows = int(os.environ.get('NUM_ROWS', 10_000_000))
-    num_files = int(os.environ.get('NUM_FILES', 10))
-    data_path = os.environ.get('DATA_PATH', '/data')
+    num_rows = int(os.environ.get("NUM_ROWS", 10_000_000))
+    num_files = int(os.environ.get("NUM_FILES", 10))
+    data_path = os.environ.get("DATA_PATH", "/data")
 
-    output_dir = Path(data_path) / 'kwik-e-mart' / 'bronze' / 'sales'
+    output_dir = Path(data_path) / "kwik-e-mart" / "bronze" / "sales"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     base_rows, extra_rows = divmod(num_rows, num_files)
 
     for file_idx in range(num_files):
         rows_in_file = base_rows + (1 if file_idx < extra_rows else 0)
-        part_path = output_dir / f'part-{file_idx:05d}.csv'
+        part_path = output_dir / f"part-{file_idx:05d}.csv"
         write_part_file(part_path, rows_in_file)
-        print(f'generate_sales_data: wrote {rows_in_file} rows -> {part_path}', file=sys.stderr)
+        print(f"generate_sales_data: wrote {rows_in_file} rows -> {part_path}", file=sys.stderr)
 
-    print(f'generate_sales_data: done. NUM_ROWS={num_rows} NUM_FILES={num_files} -> {output_dir}', file=sys.stderr)
+    print(f"generate_sales_data: done. NUM_ROWS={num_rows} NUM_FILES={num_files} -> {output_dir}", file=sys.stderr)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
