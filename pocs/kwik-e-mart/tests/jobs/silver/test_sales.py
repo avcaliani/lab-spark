@@ -1,7 +1,8 @@
 import csv
-from datetime import date
+from datetime import UTC, date, datetime
 from unittest.mock import MagicMock
 
+from pyspark.sql import functions as f
 from pyspark.sql.types import BooleanType, DateType, DoubleType, LongType, StringType, StructField, StructType
 from pyspark.testing.utils import assertDataFrameEqual
 
@@ -25,6 +26,9 @@ PARSED_SCHEMA = StructType([
     StructField("discount_pct", DoubleType()),
 ])
 VALIDATED_SCHEMA = StructType([*PARSED_SCHEMA.fields, StructField("is_valid", BooleanType())])
+
+RUN_ID = "5d1c0f0e-0d52-4b63-9a53-0a9f3f0e7c11"
+RUN_TS = datetime(2026, 10, 25, 1, 2, 3, tzinfo=UTC)
 
 
 def test_rename_cols(spark):
@@ -72,6 +76,18 @@ def test_data_quality(spark):
     )
 
 
+def test_add_metadata(spark):
+    df = spark.createDataFrame([("1",), ("2",)], ["sale_id"])
+
+    result = SalesJob.add_metadata(df, RUN_ID, RUN_TS)
+
+    assert result.columns == ["sale_id", "run_id", "run_ts"]
+    assert dict(result.dtypes)["run_ts"] == "timestamp"
+    assert {row.run_id for row in result.collect()} == {RUN_ID}
+    epochs = {row.epoch for row in result.select(f.unix_timestamp("run_ts").alias("epoch")).collect()}
+    assert epochs == {int(RUN_TS.timestamp())}
+
+
 def test_run_end_to_end(spark, tmp_path):
     bronze = tmp_path / "bronze" / "sales"
     bronze.mkdir(parents=True)
@@ -85,10 +101,10 @@ def test_run_end_to_end(spark, tmp_path):
             ("4", "January 7, 2024", "Shelbyville", "Sanjay", "Bart Simpson", "Chili Dog", -3, "$3.00", 0),
         ])
 
-    job = SalesJob(spark, MagicMock(), Config(lake_path=str(tmp_path)))
+    job = SalesJob(spark, MagicMock(), Config(lake_path=str(tmp_path), run_id=RUN_ID, run_ts=RUN_TS))
     result = job.run()
 
-    assert result.columns == [*COLUMNS, "is_valid"]
+    assert result.columns == [*COLUMNS, "is_valid", "run_id", "run_ts"]
     assert dict(result.dtypes) == {
         "sale_id": "string",
         "date": "date",
@@ -100,7 +116,10 @@ def test_run_end_to_end(spark, tmp_path):
         "unit_price": "double",
         "discount_pct": "double",
         "is_valid": "boolean",
+        "run_id": "string",
+        "run_ts": "timestamp",
     }
+    assert {row.run_id for row in result.collect()} == {RUN_ID}
     assert {row.sale_id: row.is_valid for row in result.collect()} == {
         "1": True,
         "2": False,

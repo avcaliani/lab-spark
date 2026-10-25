@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from unittest.mock import MagicMock
 
 from pyspark.sql import DataFrame
@@ -5,7 +6,7 @@ from pyspark.sql import DataFrame
 from kwik_e_mart.config import Config
 from kwik_e_mart.jobs.base import Job
 
-CONFIG = Config(lake_path="/lake")
+CONFIG = Config(lake_path="/lake", run_id="run-1", run_ts=datetime(2026, 10, 25, tzinfo=UTC))
 
 
 class DummyJob(Job):

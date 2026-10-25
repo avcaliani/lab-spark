@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as f
 
@@ -21,6 +23,7 @@ class SalesJob(Job):
             df.transform(self.rename_cols)
                 .transform(self.parse_cols)
                 .transform(self.data_quality)
+                .transform(self.add_metadata, self.config.run_id, self.config.run_ts)
         )
 
     @staticmethod
@@ -49,4 +52,12 @@ class SalesJob(Job):
             ~f.col("salesperson").isNull()
                 & ~f.col("date").isNull()
                 & (f.col("quantity") >= 0),
+        )
+
+    @staticmethod
+    def add_metadata(sales: DataFrame, run_id: str, run_ts: datetime) -> DataFrame:
+        return (
+            sales
+                .withColumn("run_id", f.lit(run_id))
+                .withColumn("run_ts", f.lit(run_ts))
         )
