@@ -22,5 +22,4 @@ spark-warehouse/
 *.log
 
 # Data (generated locally, gitignored — uv.lock is what's committed)
-data/bronze/
-data/silver/
+data/

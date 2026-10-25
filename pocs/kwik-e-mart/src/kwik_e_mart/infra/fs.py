@@ -6,11 +6,12 @@ from pyspark.sql.session import SparkSession
 
 
 def read_csv(spark: SparkSession, path: str) -> DataFrame:
-    return spark \
-        .read \
-        .option('delimiter', ',') \
-        .option('header', 'true') \
-        .csv(path)
+    return (
+        spark.read
+            .option('delimiter', ',')
+            .option('header', 'true')
+            .csv(path)
+    )
 
 
 def write_delta(spark: SparkSession, df: DataFrame, path: str, cluster_by: list[str]) -> None:
@@ -24,19 +25,14 @@ def write_delta(spark: SparkSession, df: DataFrame, path: str, cluster_by: list[
         # the table definition itself and silently drops the clustering metadata
         DeltaTable.forPath(spark, path).delete()
     else:
-        DeltaTable.createOrReplace(spark) \
-            .addColumns(df.schema) \
-            .clusterBy(*cluster_by) \
-            .location(path) \
-            .execute()
-    df.write \
-        .format('delta') \
-        .mode('append') \
-        .save(path)
+        (DeltaTable.createOrReplace(spark)
+            .addColumns(df.schema)
+            .clusterBy(*cluster_by)
+            .location(path)
+            .execute())
+
+    df.write.format('delta').mode('append').save(path)
 
 
 def read_delta(spark: SparkSession, path: str) -> DataFrame:
-    return spark \
-        .read \
-        .format('delta') \
-        .load(path)
+    return spark.read.format('delta').load(path)
