@@ -30,3 +30,14 @@ def test_write_delta_replaces_the_rows_of_an_existing_table(spark, tmp_path):
     fs.write_delta(spark, second, path, ["branch"])
 
     assertDataFrameEqual(fs.read_delta(spark, path), second)
+
+
+def test_write_delta_adds_new_columns_to_an_existing_table(spark, tmp_path):
+    first = spark.createDataFrame([("1", "Springfield")], ["id", "branch"])
+    second = spark.createDataFrame([("2", "Shelbyville", "run-1")], ["id", "branch", "run_id"])
+    path = str(tmp_path / "out")
+
+    fs.write_delta(spark, first, path, ["branch"])
+    fs.write_delta(spark, second, path, ["branch"])
+
+    assertDataFrameEqual(fs.read_delta(spark, path), second)
