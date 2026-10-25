@@ -9,7 +9,7 @@ class SparkLogger:
         self.job_name = job_name
 
     def info(self, msg: str) -> None:
-        self.logger.info(f'[{self.job_name}] {msg}')
+        self.logger.info(f"[{self.job_name}] {msg}")
 
     def error(self, msg: str) -> None:
-        self.logger.error(f'[{self.job_name}] {msg}')
+        self.logger.error(f"[{self.job_name}] {msg}")

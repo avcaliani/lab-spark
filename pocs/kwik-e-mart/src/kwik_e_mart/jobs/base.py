@@ -3,9 +3,10 @@ from textwrap import dedent
 from typing import Self
 
 from pyspark.sql import DataFrame, SparkSession
-from src.kwik_e_mart.config import Config
-from src.kwik_e_mart.infra import fs
-from src.kwik_e_mart.infra.logging import SparkLogger
+
+from kwik_e_mart.config import Config
+from kwik_e_mart.infra import fs
+from kwik_e_mart.infra.spark_logger import SparkLogger
 
 
 class Job(ABC):

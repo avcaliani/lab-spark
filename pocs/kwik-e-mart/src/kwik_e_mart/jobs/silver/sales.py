@@ -1,7 +1,8 @@
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as f
-from src.kwik_e_mart.infra import fs
-from src.kwik_e_mart.jobs.base import Job
+
+from kwik_e_mart.infra import fs
+from kwik_e_mart.jobs.base import Job
 
 
 class SalesJob(Job):

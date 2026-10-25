@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
 
-from src.kwik_e_mart.jobs import JOBS
+from kwik_e_mart.jobs import JOBS
 
 DESCRIPTION = """
 \033[1;33m🏪 Kwik-E-Mart\033[0m
@@ -10,7 +10,7 @@ Run a Kwik-E-Mart PySpark Job.
 """
 
 
-def args() -> Namespace:
+def parse_args() -> Namespace:
     parser = ArgumentParser(
         prog="kwik-e-mart",
         description=DESCRIPTION,

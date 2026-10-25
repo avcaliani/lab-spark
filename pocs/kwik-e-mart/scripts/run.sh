@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")/.."
 
-PYTHONPATH="$PWD" uv run spark-submit --master local \
+PYTHONPATH="$PWD/src" uv run spark-submit --master local \
   --files resources/log4j.properties \
   --packages "io.delta:delta-spark_2.13:4.3.1" \
   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
