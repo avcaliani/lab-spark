@@ -78,9 +78,12 @@ kwik-e-mart/
 ├── resources/             # log4j properties
 ├── scripts/               # data generator and run.sh
 ├── src/
-│   ├── main.py
-│   ├── pipelines/
-│   └── utils/
+│   └── kwik_e_mart/
+│       ├── main.py
+│       ├── cli.py
+│       ├── config.py
+│       ├── infra/
+│       └── jobs/
 └── tests/
 ```
 
