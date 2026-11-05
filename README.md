@@ -19,7 +19,6 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── .github/                    pr + issue templates
 ├── AGENTS.md                   instructions for coding agents
 ├── LICENSE                     MIT license
-├── snippets/                   isolated spark experiments (scripts, notebooks, graphx)
 └── pocs/
     ├── README.md               the Kwik-E-Mart universe and the inspiration
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
@@ -34,7 +33,7 @@ Each poc is self-contained and runs in Docker, see its README:
 - [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
 - [`pocs/kwik-e-mart`](pocs/kwik-e-mart/README.md)
 
-Experiments are run one by one, see [`snippets/README.md`](snippets/README.md).
+Small isolated experiments live in [scratchpad](https://github.com/avcaliani/scratchpad/tree/main/data/spark).
 
 ---
 

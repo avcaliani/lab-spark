@@ -1,7 +1,0 @@
-# generated outputs
-data/
-.ipynb_checkpoints/
-
-# Python
-.venv/
-__pycache__/

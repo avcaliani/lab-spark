@@ -11,13 +11,13 @@ Anchor to PySpark analogues.
 
 Read [`README.md`](README.md) first (file tree), then [`pocs/README.md`](pocs/README.md) (shared universe).
 
-Each poc and snippet has its own README, except `snippets/scripts` and `snippets/notebooks` (see `snippets/README.md`).
+Each poc has its own README.
 
 Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1.
 Keep versions aligned across pocs.
 
 **NEVER run Python or PySpark commands outside the virtual env.**
-Use `uv run ...` from the folder that owns the `pyproject.toml` (for snippets, `snippets/` or below), or the project's container.
+Use `uv run ...` from the folder that owns the `pyproject.toml`, or the project's container.
 
 ## Keep Docs Updated
 
