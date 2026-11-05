@@ -1,8 +1,0 @@
-name_origin,type,amount,is_fraud
-Homer Simpson,CASH_OUT,50.0,0
-Homer Simpson,PAYMENT,10.0,0
-Homer Simpson,TRANSFER,900.0,1
-Bart Simpson,DEBIT,15.0,0
-Bart Simpson,CASH_OUT,200.0,1
-Mr. Burns,TRANSFER,5000.0,1
-Marge Simpson,PAYMENT,30.0,0
