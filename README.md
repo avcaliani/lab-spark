@@ -43,3 +43,13 @@ Small isolated experiments live in [scratchpad](https://github.com/avcaliani/scr
 [Delta Lake]: https://delta.io
 [sbt]: https://www.scala-sbt.org
 [uv]: https://docs.astral.sh/uv/
+
+---
+
+> [!NOTE]
+> **AI Disclaimer**
+>
+> This is a study repo, and the goal is learning and sharpening my skills, so most of the code is written by me.  
+> I use LLMs to explain concepts, help with code and tests, review code, improve docs and notes,
+> and assist with refactors, including reorganizing files.  
+> I personally review all changes and take responsibility for them.
