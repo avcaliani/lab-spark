@@ -1,0 +1,15 @@
+services:
+
+  spark:
+    build: ./docker
+    image: spark-lab
+    container_name: spark-lab
+    environment:
+      DATA_PATH: /data
+    ports:
+      - "4040:4040"   # Spark UI (while a job runs)
+      - "18080:18080" # Spark History Server
+    volumes:
+      - ./pocs:/opt/spark-apps/apps
+      - ./scripts:/opt/spark-apps/scripts
+      - ./data:/data

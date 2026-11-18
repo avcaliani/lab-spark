@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 # Generates a mock "DonutCoin (DONU)" transaction ledger dataset, themed on The Simpsons.
 #
-# Output: data/bronze/donu-transactions/.
+# Output: $DATA_PATH/bronze/kwik_e_chain/transactions/donu/.
 # Env Vars:
 #   - NUM_TRANSACTIONS (default 1000000)
 #   - NUM_FILES (default 10)
-#   - DATA_PATH (default data)
+#   - DATA_PATH (default /data)
 #
 import csv
 import os
@@ -71,8 +71,8 @@ def new_row() -> list[str | int]:
 def main() -> None:
     num_transactions = int(os.environ.get("NUM_TRANSACTIONS", 1000000))
     num_files_requested = int(os.environ.get("NUM_FILES", 10))
-    data_path = os.environ.get("DATA_PATH", "data")
-    output_dir = Path(data_path) / "bronze" / "donu-transactions"
+    data_path = os.environ.get("DATA_PATH", "/data")
+    output_dir = Path(data_path) / "bronze" / "kwik_e_chain" / "transactions" / "donu"
 
     if num_transactions < 1:
         sys.exit(f"NUM_TRANSACTIONS must be >= 1 (got {num_transactions})")

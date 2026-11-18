@@ -89,7 +89,7 @@ def test_add_metadata(spark):
 
 
 def test_run_end_to_end(spark, tmp_path):
-    bronze = tmp_path / "bronze" / "sales"
+    bronze = tmp_path / "bronze" / "kwik_e_mart" / "sales"
     bronze.mkdir(parents=True)
     with (bronze / "part-00000.csv").open("w", newline="") as file:
         writer = csv.writer(file)

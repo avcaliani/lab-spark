@@ -5,7 +5,3 @@ tmp
 *.class
 *.log
 spark-warehouse/
-
-# Data (generated locally / Delta output, gitignored)
-data/bronze/
-data/silver/

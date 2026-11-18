@@ -8,6 +8,8 @@ from kwik_e_mart.config import Config
 from kwik_e_mart.infra import fs
 from kwik_e_mart.infra.spark_logger import SparkLogger
 
+SUBJECT = "kwik_e_mart"
+
 
 class Job(ABC):
 
@@ -27,8 +29,9 @@ class Job(ABC):
 
     @property
     def output_path(self) -> str:
-        """Path to write the output of the job to."""
-        return f"{self.config.lake_path}/{self.name}"
+        """Path to write the output of the job to: <lake>/<layer>/<subject>/<table>."""
+        layer, table = self.name.split("/", 1)
+        return f"{self.config.lake_path}/{layer}/{SUBJECT}/{table}"
 
     @property
     def cluster_by(self) -> list[str]:

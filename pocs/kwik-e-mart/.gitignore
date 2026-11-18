@@ -20,6 +20,3 @@ spark-warehouse/
 # Dev Stuff
 *.csv
 *.log
-
-# Data (generated locally, gitignored, uv.lock is what's committed)
-data/

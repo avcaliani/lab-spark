@@ -20,9 +20,9 @@ class ClusteredJob(DummyJob):
     cluster_by = ["branch", "date"]
 
 
-def test_output_path_is_lake_path_plus_job_name():
+def test_output_path_is_lake_layer_subject_table():
     job = DummyJob(MagicMock(), MagicMock(), CONFIG)
-    assert job.output_path == "/lake/layer/dummy"
+    assert job.output_path == "/lake/layer/kwik_e_mart/dummy"
 
 
 def test_cluster_by_defaults_to_no_columns():
