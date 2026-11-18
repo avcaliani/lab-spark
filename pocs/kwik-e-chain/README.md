@@ -14,31 +14,23 @@ Scala and Spark pipeline that validates the DonutCoin (DONU) transaction ledger 
 
 ## Quick Start
 
+Docker setup lives at the repo root, see [How to run](../../README.md#how-to-run).
+
 ```sh
-# All commands below run from this folder
-cd pocs/kwik-e-chain
+# All commands below run from the repo root
+docker compose up -d --build
 
-# Download the known-users reference (the pipeline reads data/bronze/users.csv to validate transfers)
-# Pinned to a commit of kafka-in-docker's Simpsons cast list
-mkdir -p data/bronze
-curl -o data/bronze/users.csv \
-  https://raw.githubusercontent.com/avcaliani/kafka-in-docker/bd46b85779ecc6ee4eebc388813009096bb17158/scripts/users.csv
+# Generate data (incl. the users.csv reference) and run every poc
+docker compose exec spark ./scripts/run-pipeline.sh
 
-# Build the image
-docker compose build
-
-# Start the container
-docker compose up -d
-
-# Generate the mock DonutCoin transactions dataset (python3 is installed in the Dockerfile)
-docker compose exec spark python3 scripts/generate_donu_transactions.py
-
-# Run the job (builds & runs)
-docker compose exec spark scripts/run.sh
+# Or, once the data is there, run only this job (builds & runs)
+docker compose exec spark apps/kwik-e-chain/scripts/run.sh
 
 # When you're done
 docker compose down
 ```
+
+Reads `/data/bronze/{donu-transactions,users.csv}`, writes `/data/silver/daily-transactions/{success,error,debug}` (paths in `app.properties`).
 
 <details>
 <summary>Pipeline Logs 🎥</summary>
@@ -78,9 +70,7 @@ sbt scalafmtAll
 ```text
 kwik-e-chain/
 ├── build.sbt
-├── Dockerfile
-├── docker-compose.yml
-├── scripts/               # data generator and run.sh
+├── scripts/               # run.sh
 └── src/
     ├── main/
     │   ├── resources/     # app and log4j2 properties

@@ -26,7 +26,7 @@ def parse_args() -> Namespace:
     )
     parser.add_argument(
         "--lake-path",
-        default="/data/kwik-e-mart",
+        default="/data",
         help="Root path of the data lake.",
     )
     return parser.parse_args()

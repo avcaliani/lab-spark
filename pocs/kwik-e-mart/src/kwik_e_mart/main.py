@@ -12,12 +12,10 @@ APP_NAME = "kwik-e-mart"
 
 def init_spark() -> SparkSession:
     """Build the Spark session. Options are focused on running locally."""
-    # Note: You could use a env var to set spark configs based on 
-    # the environment (dev, test, prod) if you wanted to.
+    # Note: Master, partitions and Delta come from spark-defaults.conf.
+    # Configs set here win over that file, so keep only app-level ones.
     return (
         SparkSession.builder.appName(APP_NAME)
-            .config("spark.sql.shuffle.partitions", "4")
-            .config("spark.default.parallelism", "4")
             .config("spark.sql.session.timeZone", "UTC")
             .config("spark.driver.bindAddress", "127.0.0.1")
             .config("spark.driver.host", "127.0.0.1")

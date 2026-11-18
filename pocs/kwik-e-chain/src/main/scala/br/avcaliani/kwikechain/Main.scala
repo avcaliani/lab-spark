@@ -18,13 +18,10 @@ object Main extends App with Properties {
     )
   )
   private val appName = getProperty("app.name")
+  // Master comes from spark-submit / spark-defaults.conf, don't hardcode it here
   private val spark = SparkSession
     .builder()
-    .config(
-      new SparkConf()
-        .setMaster("local[4]")
-        .setAppName(appName)
-    )
+    .config(new SparkConf().setAppName(appName))
     .getOrCreate()
 
   log.debug(s"Running pipeline '$name'...")

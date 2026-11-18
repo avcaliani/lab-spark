@@ -10,7 +10,7 @@ def test_job_is_mapped_to_job_name(monkeypatch):
 
 def test_lake_path_has_a_default(monkeypatch):
     monkeypatch.setattr("sys.argv", ["kwik-e-mart", "-j", "silver/sales"])
-    assert cli.parse_args().lake_path == "/data/kwik-e-mart"
+    assert cli.parse_args().lake_path == "/data"
 
 
 def test_lake_path_can_be_overridden(monkeypatch):

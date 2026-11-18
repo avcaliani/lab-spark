@@ -19,6 +19,13 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── .github/                    pr + issue templates
 ├── AGENTS.md                   instructions for coding agents
 ├── LICENSE                     MIT license
+├── Dockerfile                  one image for both pocs: java, spark, sbt, uv
+├── docker-compose.yml          one long-running container, exec into it
+├── data/                       shared data lake (bronze, silver, gold), gitignored
+├── scripts/
+│   ├── run-pipeline.sh         generate data, then run every poc
+│   ├── spark-defaults.conf     local spark tuning, mounted into the container
+│   └── generate_*.py           mock data generators
 └── pocs/
     ├── README.md               the Kwik-E-Mart universe and the inspiration
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
@@ -27,8 +34,25 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 
 ## How to run
 
-Both pocs live in the same Kwik-E-Mart universe, see [`pocs/README.md`](pocs/README.md).  
-Each poc is self-contained and runs in Docker, see its README:
+Both pocs live in the same Kwik-E-Mart universe and share one image and one data lake, see [`pocs/README.md`](pocs/README.md).  
+Everything runs from the repo root:
+
+```bash
+docker compose up -d --build                             # build image, start container
+docker compose exec spark ./scripts/run-pipeline.sh      # generate data + run every poc
+docker compose exec spark apps/kwik-e-mart/scripts/run.sh # one poc
+docker compose exec spark bash                           # poke around
+docker compose down                                      # stop + remove container
+```
+
+> [!TIP]
+> **Spark UIs**
+>
+> - [localhost:4040](http://localhost:4040): Spark UI, only while a job is running.
+> - [localhost:18080](http://localhost:18080): Spark History Server, browse finished jobs.
+
+Inside the container `pocs/` is mounted at `/opt/spark-apps/apps` and `data/` at `/data`.  
+See each poc's README for details:
 
 - [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
 - [`pocs/kwik-e-mart`](pocs/kwik-e-mart/README.md)

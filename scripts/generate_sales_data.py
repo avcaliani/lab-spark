@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 #
 # Generates a mock "Kwik-E-Mart daily sales"
 #
@@ -83,7 +83,7 @@ def main() -> None:
     num_files = int(os.environ.get("NUM_FILES", 10))
     data_path = os.environ.get("DATA_PATH", "/data")
 
-    output_dir = Path(data_path) / "kwik-e-mart" / "bronze" / "sales"
+    output_dir = Path(data_path) / "bronze" / "sales"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     base_rows, extra_rows = divmod(num_rows, num_files)

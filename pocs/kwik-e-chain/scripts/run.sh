@@ -42,20 +42,21 @@ is_installed "spark-submit"
 is_installed "sbt"
 
 echo -e "${INFO} Building project..."
-sbt clean assembly
+sbt assembly
 
 jar_file=$(ls ${JAR_DIR}/*.jar)
 echo -e "${INFO} JAR File -> '${jar_file}'"
 
 log4j_config="file://$(pwd)/src/main/resources/log4j2.properties"
 
+# Event logs for the History Server (spark-defaults.conf)
+mkdir -p "${DATA_PATH:-/data}/spark-events"
+
+# Master, Delta and tuning come from spark-defaults.conf
 echo -e "${INFO} Starting Spark..."
 spark-submit \
-    --master local \
     --conf "spark.driver.extraJavaOptions=-Dlog4j.configurationFile=${log4j_config}" \
-    --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
-    --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
-    ${jar_file} \
+    "${jar_file}" \
     -p daily-transactions "$@"
 
 echo -e "${INFO} Process has been finished \\o/"

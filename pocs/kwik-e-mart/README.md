@@ -15,31 +15,30 @@ The dataset is a locally-generated, dependency-free mock, nothing to download.
 
 ## Quick Start
 
-Java, Spark, uv, and all Python dependencies are baked into the image at build time.  
-No manual install step after `up`.
+Docker setup lives at the repo root, see [How to run](../../README.md#how-to-run).  
+Python deps are synced by `run.sh` into `/opt/venvs/kwik-e-mart` inside the container, so the host `.venv` is never touched.
 
 ```bash
-cd pocs/kwik-e-mart
+# All commands below run from the repo root
+docker compose up -d --build
 
-# Build the image
-docker compose build
+# Generate data and run every poc
+docker compose exec spark ./scripts/run-pipeline.sh
 
-# Start the container
-docker compose up -d
+# Or, once the data is there, run only this job
+docker compose exec spark apps/kwik-e-mart/scripts/run.sh
 
-# Generate the mock sales dataset
-docker compose exec app scripts/generate_sales_data.py
-
-# Run the PySpark job
-docker compose exec app scripts/run.sh
+# Check the files
+tree data -L 3
 
 # When you're done
 docker compose down
 ```
 
 <details>
-<summary>Run locally (without Docker) 👇</summary>
+<summary>Local Development 👇</summary>
 
+Tests and lint run locally. The job itself runs only in the container (Spark config lives in `scripts/spark-defaults.conf`).  
 Requires Python 3.12, JDK 21, and [uv](https://docs.astral.sh/uv/) installed locally.
 
 ```bash
@@ -47,16 +46,6 @@ cd pocs/kwik-e-mart
 
 # Install dependencies
 uv sync
-
-# Generate the mock sales dataset
-DATA_PATH="$(pwd)/data" uv run scripts/generate_sales_data.py
-
-# Run the PySpark job (must be an absolute path -- Delta's path-based table
-# addressing breaks on a leading ./ in the path)
-DATA_PATH="$(pwd)/data" scripts/run.sh
-
-# Check the Files
-tree ./data -L 4
 
 # Run the tests
 uv run pytest
@@ -73,10 +62,8 @@ uv run ruff check .
 ```text
 kwik-e-mart/
 ├── pyproject.toml
-├── Dockerfile
-├── docker-compose.yml
 ├── resources/             # log4j properties
-├── scripts/               # data generator and run.sh
+├── scripts/               # run.sh
 ├── src/
 │   └── kwik_e_mart/
 │       ├── main.py
