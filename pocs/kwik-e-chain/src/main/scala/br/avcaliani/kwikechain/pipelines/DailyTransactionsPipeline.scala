@@ -50,9 +50,9 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val dfOk        = transactions.filter($"is_valid").drop(dropColumns: _*)
     val dfErr       = transactions.filter(not($"is_valid")).drop(dropColumns: _*)
 
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/debug", transactions, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/error", dfErr, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/success", dfOk, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_debug", transactions, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_error", dfErr, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_success", dfOk, CLUSTER_BY)
 
     log.info(f"Debug count: ${transactions.count()}%,d")
     log.info(f"Error count: ${dfErr.count()}%,d")
