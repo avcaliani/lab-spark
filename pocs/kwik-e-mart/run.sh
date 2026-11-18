@@ -6,6 +6,7 @@ DATA_PATH="${DATA_PATH:-/data}"
 INFO="\033[0;34mINFO\033[00m:"
 
 echo -e "${INFO} Syncing dependencies..."
+# In Docker the poc is bind-mounted, keep the venv outside so the host .venv stays untouched
 if [ -f /.dockerenv ]; then
     export UV_PROJECT_ENVIRONMENT=/opt/venvs/kwik-e-mart
 fi

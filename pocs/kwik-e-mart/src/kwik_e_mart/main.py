@@ -17,8 +17,6 @@ def init_spark() -> SparkSession:
     return (
         SparkSession.builder.appName(APP_NAME)
             .config("spark.sql.session.timeZone", "UTC")
-            .config("spark.driver.bindAddress", "127.0.0.1")
-            .config("spark.driver.host", "127.0.0.1")
             .getOrCreate()
     )
 

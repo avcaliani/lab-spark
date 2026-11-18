@@ -30,7 +30,7 @@ docker compose exec spark apps/kwik-e-chain/run.sh
 docker compose down
 ```
 
-Reads `/data/bronze/{donu-transactions,users.csv}`, writes `/data/silver/daily-transactions/{success,error,debug}` (paths in `app.properties`).
+Reads `/data/bronze/kwik-e-chain/transactions/donu` and `/data/bronze/springfield/users`, writes `/data/silver/kwik-e-chain/transactions/donu/{success,error,debug}` (lake root in `app.properties`).
 
 <details>
 <summary>Pipeline Logs 🎥</summary>

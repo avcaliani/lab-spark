@@ -19,16 +19,10 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── .github/                    pr + issue templates
 ├── AGENTS.md                   instructions for coding agents
 ├── LICENSE                     MIT license
-├── docker/
-│   ├── Dockerfile              one image for both pocs: java, spark, sbt, uv
-│   ├── spark-defaults.conf     local spark tuning, baked into the image
-│   ├── log4j2.properties       local log format + levels, baked into the image
-│   └── start.sh                container cmd: starts the history server, stays alive
+├── docker/                     the image: dockerfile, spark + log4j2 configs, start script
 ├── docker-compose.yml          one long-running container, exec into it
-├── data/                       shared data lake (bronze, silver, gold), gitignored
-├── scripts/
-│   ├── run-pipeline.sh         generate data, then run every poc
-│   └── generate_*.py           mock data generators
+├── data/                       shared data lake, <layer>/<subject>/<table>, gitignored
+├── scripts/                    run-pipeline.sh (generate data + run every poc) and data generators
 └── pocs/
     ├── README.md               the Kwik-E-Mart universe and the inspiration
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions

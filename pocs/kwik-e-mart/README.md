@@ -15,8 +15,7 @@ The dataset is a locally-generated, dependency-free mock, nothing to download.
 
 ## Quick Start
 
-Docker setup lives at the repo root, see [How to run](../../README.md#how-to-run).  
-Python deps are synced by `run.sh` into `/opt/venvs/kwik-e-mart` inside the container, so the host `.venv` is never touched.
+Docker setup lives at the repo root, see [How to run](../../README.md#how-to-run).
 
 ```bash
 # All commands below run from the repo root
@@ -38,7 +37,8 @@ docker compose down
 <details>
 <summary>Local Development 👇</summary>
 
-Tests and lint run locally. The job itself runs only in the container (Spark config lives in `docker/spark-defaults.conf`).  
+Tests and lint run locally.  
+The job itself runs only in the container (Spark config lives in `docker/spark-defaults.conf`).  
 Requires Python 3.12, JDK 21, and [uv](https://docs.astral.sh/uv/) installed locally.
 
 ```bash

@@ -83,7 +83,7 @@ def main() -> None:
     num_files = int(os.environ.get("NUM_FILES", 10))
     data_path = os.environ.get("DATA_PATH", "/data")
 
-    output_dir = Path(data_path) / "bronze" / "sales"
+    output_dir = Path(data_path) / "bronze" / "kwik-e-mart" / "sales"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     base_rows, extra_rows = divmod(num_rows, num_files)

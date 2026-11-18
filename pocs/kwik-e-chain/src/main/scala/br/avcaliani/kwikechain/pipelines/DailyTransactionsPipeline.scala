@@ -21,7 +21,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val fs = new FSUtil(spark)
 
     log.debug("Task::Read")
-    val transactions = fs.read(s"$DATA_BRONZE/donu-transactions")
+    val transactions = fs.read(s"$DATA_BRONZE/kwik-e-chain/transactions/donu")
       .select(
         $"transaction_id",
         $"timestamp",
@@ -33,7 +33,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
       )
     log.info(f"Input count: ${transactions.count()}%,d")
 
-    val users = fs.read(s"$DATA_BRONZE/users.csv")
+    val users = fs.read(s"$DATA_BRONZE/springfield/users")
       .select($"user_name")
 
     log.debug("Task::Validate")
@@ -50,9 +50,9 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val dfOk        = transactions.filter($"is_valid").drop(dropColumns: _*)
     val dfErr       = transactions.filter(not($"is_valid")).drop(dropColumns: _*)
 
-    fs.writeDelta(s"$DATA_SILVER/daily-transactions/debug", transactions, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/daily-transactions/error", dfErr, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/daily-transactions/success", dfOk, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/debug", transactions, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/error", dfErr, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu/success", dfOk, CLUSTER_BY)
 
     log.info(f"Debug count: ${transactions.count()}%,d")
     log.info(f"Error count: ${dfErr.count()}%,d")
