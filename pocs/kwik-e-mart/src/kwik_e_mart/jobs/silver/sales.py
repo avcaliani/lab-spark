@@ -16,7 +16,7 @@ class SalesJob(Job):
     def run(self) -> DataFrame:
         df = fs.read_csv(
             spark = self.spark,
-            path = f"{self.config.lake_path}/bronze/kwik-e-mart/sales"
+            path = f"{self.config.lake_path}/bronze/kwik_e_mart/sales"
         )
         self.logger.info(f"Input Row Count: {df.count():,}")
         return (

@@ -8,7 +8,7 @@ from kwik_e_mart.config import Config
 from kwik_e_mart.infra import fs
 from kwik_e_mart.infra.spark_logger import SparkLogger
 
-SUBJECT = "kwik-e-mart"
+SUBJECT = "kwik_e_mart"
 
 
 class Job(ABC):

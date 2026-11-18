@@ -21,7 +21,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val fs = new FSUtil(spark)
 
     log.debug("Task::Read")
-    val transactions = fs.read(s"$DATA_BRONZE/kwik-e-chain/transactions/donu")
+    val transactions = fs.read(s"$DATA_BRONZE/kwik_e_chain/transactions/donu")
       .select(
         $"transaction_id",
         $"timestamp",
@@ -50,9 +50,9 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val dfOk        = transactions.filter($"is_valid").drop(dropColumns: _*)
     val dfErr       = transactions.filter(not($"is_valid")).drop(dropColumns: _*)
 
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_debug", transactions, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_error", dfErr, CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/kwik-e-chain/transactions/donu_success", dfOk, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik_e_chain/transactions/donu_debug", transactions, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik_e_chain/transactions/donu_error", dfErr, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/kwik_e_chain/transactions/donu_success", dfOk, CLUSTER_BY)
 
     log.info(f"Debug count: ${transactions.count()}%,d")
     log.info(f"Error count: ${dfErr.count()}%,d")
