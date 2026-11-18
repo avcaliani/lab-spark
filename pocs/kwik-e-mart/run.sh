@@ -1,25 +1,15 @@
 #!/bin/bash
-#
-# Script Name : run.sh
-# Date        : 2026.11
-# License     : MIT
-#
-# Description : Syncs and runs "kwik-e-mart" through Spark Submit.
-#               Master, Delta, tuning and logging come from docker/ (spark-defaults.conf, log4j2.properties).
 set -euo pipefail
 cd "$(dirname "$0")"
 
 DATA_PATH="${DATA_PATH:-/data}"
 INFO="\033[0;34mINFO\033[00m:"
 
-# Keep the venv outside the bind-mounted poc, so it never touches the host .venv
-export UV_PROJECT_ENVIRONMENT=/opt/venvs/kwik-e-mart
-
 echo -e "${INFO} Syncing dependencies..."
+if [ -f /.dockerenv ]; then
+    export UV_PROJECT_ENVIRONMENT=/opt/venvs/kwik-e-mart
+fi
 uv sync --frozen
-
-# Event logs for the History Server
-mkdir -p "${DATA_PATH}/spark-events"
 
 echo -e "${INFO} Starting Spark..."
 PYTHONPATH="$(pwd)/src" uv run spark-submit \
