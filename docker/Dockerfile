@@ -34,8 +34,8 @@ RUN tar -xzf sbt-*.tgz && rm -f sbt-*.tgz
 ADD "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" .
 RUN tar -xzf spark-*.tgz && rm -f spark-*.tgz && mv spark-* spark
 
-# Spark config + start script (starts the History Server)
-COPY spark-defaults.conf "$SPARK_HOME/conf/spark-defaults.conf"
+# Spark + log config, start script (starts the History Server)
+COPY spark-defaults.conf log4j2.properties "$SPARK_HOME/conf/"
 COPY --chmod=755 start.sh /opt/start.sh
 
 WORKDIR /opt/spark-apps

@@ -22,6 +22,7 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── docker/
 │   ├── Dockerfile              one image for both pocs: java, spark, sbt, uv
 │   ├── spark-defaults.conf     local spark tuning, baked into the image
+│   ├── log4j2.properties       local log format + levels, baked into the image
 │   └── start.sh                container cmd: starts the history server, stays alive
 ├── docker-compose.yml          one long-running container, exec into it
 ├── data/                       shared data lake (bronze, silver, gold), gitignored
@@ -42,7 +43,7 @@ Everything runs from the repo root:
 ```bash
 docker compose up -d --build                             # build image, start container (rerun after docker/ edits)
 docker compose exec spark ./scripts/run-pipeline.sh      # generate data + run every poc
-docker compose exec spark apps/kwik-e-mart/scripts/run.sh # one poc
+docker compose exec spark apps/kwik-e-mart/run.sh        # one poc
 docker compose exec spark bash                           # poke around
 docker compose down                                      # stop + remove container
 ```

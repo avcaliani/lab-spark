@@ -23,7 +23,7 @@ filterwarnings = ["ignore:unclosed <socket.socket:ResourceWarning"]
 
 [tool.ruff]
 line-length = 120
-src = ["src", "tests", "scripts"]
+src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]

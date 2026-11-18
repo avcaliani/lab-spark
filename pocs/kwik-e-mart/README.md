@@ -26,7 +26,7 @@ docker compose up -d --build
 docker compose exec spark ./scripts/run-pipeline.sh
 
 # Or, once the data is there, run only this job
-docker compose exec spark apps/kwik-e-mart/scripts/run.sh
+docker compose exec spark apps/kwik-e-mart/run.sh
 
 # Check the files
 tree data -L 3
@@ -62,8 +62,7 @@ uv run ruff check .
 ```text
 kwik-e-mart/
 ├── pyproject.toml
-├── resources/             # log4j properties
-├── scripts/               # run.sh
+├── run.sh                 # sync deps + spark-submit
 ├── src/
 │   └── kwik_e_mart/
 │       ├── main.py

@@ -28,9 +28,9 @@ uv run --no-project scripts/generate_donu_transactions.py
 uv run --no-project scripts/generate_sales_data.py
 
 echo -e "${INFO} Running kwik-e-chain..."
-apps/kwik-e-chain/scripts/run.sh
+apps/kwik-e-chain/run.sh
 
 echo -e "${INFO} Running kwik-e-mart..."
-apps/kwik-e-mart/scripts/run.sh
+apps/kwik-e-mart/run.sh
 
 echo -e "${INFO} Pipeline finished \\o/"

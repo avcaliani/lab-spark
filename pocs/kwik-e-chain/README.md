@@ -24,7 +24,7 @@ docker compose up -d --build
 docker compose exec spark ./scripts/run-pipeline.sh
 
 # Or, once the data is there, run only this job (builds & runs)
-docker compose exec spark apps/kwik-e-chain/scripts/run.sh
+docker compose exec spark apps/kwik-e-chain/run.sh
 
 # When you're done
 docker compose down
@@ -70,10 +70,10 @@ sbt scalafmtAll
 ```text
 kwik-e-chain/
 ├── build.sbt
-├── scripts/               # run.sh
+├── run.sh                 # build + spark-submit
 └── src/
     ├── main/
-    │   ├── resources/     # app and log4j2 properties
+    │   ├── resources/     # app properties
     │   └── scala/br/avcaliani/kwikechain/
     │       ├── Main.scala
     │       ├── pipelines/
