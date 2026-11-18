@@ -38,7 +38,7 @@ docker compose down
 <details>
 <summary>Local Development 👇</summary>
 
-Tests and lint run locally. The job itself runs only in the container (Spark config lives in `scripts/spark-defaults.conf`).  
+Tests and lint run locally. The job itself runs only in the container (Spark config lives in `docker/spark-defaults.conf`).  
 Requires Python 3.12, JDK 21, and [uv](https://docs.astral.sh/uv/) installed locally.
 
 ```bash
